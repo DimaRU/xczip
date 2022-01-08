@@ -17,7 +17,7 @@ $ brew install DimaRU/formulae/xczip
 ```
 OVERVIEW: Create xcframework zip archive for swift binary package.
 
-USAGE: xczip <path> --date <date> [--time <time>] [--output-path <output-path>]
+USAGE: xczip <path> --date <date> [--time <time>] [--output-path <output-path>] [--comment <comment>]
 
 ARGUMENTS:
   <path>                  Path to xcframework.
@@ -28,7 +28,8 @@ OPTIONS:
   --time <time>           Force compressed files modification time.
         Time format must be hh:mm:ss
   -o, --output-path <output-path>
-                          Created archive path.
+                          Path for created archive.
+  -c, --comment <comment> Add comment to zip file.
   --version               Show the version.
   -h, --help              Show help information.
 ```
