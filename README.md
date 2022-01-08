@@ -3,8 +3,18 @@
 xczip - create xcframework zip archive for swift binary package. 
 Creates an xcframework archive with a stable checksum that does not change when the build is repeated.
 
-### Usage:
+### Installation
 
+#### Homebrew
+
+Run the following command to install using [Homebrew](https://brew.sh/):
+
+```console
+$ brew install DimaRU/formulae/xczip
+```
+
+### Usage:
+```
 OVERVIEW: Create xcframework zip archive for swift binary package.
 
 USAGE: xczip <path> --date <date> [--time <time>] [--output-path <output-path>]
@@ -21,3 +31,4 @@ OPTIONS:
                           Created archive path.
   --version               Show the version.
   -h, --help              Show help information.
+```
