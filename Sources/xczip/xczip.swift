@@ -13,7 +13,7 @@ import ZIPFoundation
 struct xczip: ParsableCommand {
     static var configuration = CommandConfiguration(commandName: "xczip",
                                                     abstract: "Create xcframework zip archive for swift binary package.",
-                                                    version: "1.0.0")
+                                                    version: "1.1.0")
 
     @Argument(help: "Path to xcframework.")
     var path: String
@@ -26,8 +26,11 @@ struct xczip: ParsableCommand {
                                             discussion: "Time format must be hh:mm:ss"))
     var time: String?
 
-    @Option(name: .shortAndLong, help: "Created archive path.")
+    @Option(name: .shortAndLong, help: "Path for created archive.")
     var outputPath: String?
+
+    @Option(name: .shortAndLong, help: "Add comment to zip file.")
+    var comment: String?
 
     mutating func run() throws {
         let dateFormatter = DateFormatter()
@@ -53,14 +56,19 @@ struct xczip: ParsableCommand {
             
         let fileManager = FileManager()
         let sourceURL = URL(fileURLWithPath: path)
-        let destinationURL: URL
+        let archiveURL: URL
         if let outputPath = outputPath {
-            destinationURL = URL(fileURLWithPath: outputPath)
+            archiveURL = URL(fileURLWithPath: outputPath)
         } else {
-            destinationURL = sourceURL.appendingPathExtension("zip")
+            archiveURL = sourceURL.appendingPathExtension("zip")
         }
+        let commentData = comment?.data(using: .utf8) ?? Data()
+
         do {
-            try fileManager.zipItem(at: sourceURL, to: destinationURL, compressionMethod: .deflate, forceDate: forceDate)
+            try fileManager.zipItem(at: sourceURL, to: archiveURL,
+                                    compressionMethod: .deflate,
+                                    forceDate: forceDate,
+                                    zipFileCommentData: commentData)
         } catch {
             print("Creation of ZIP archive failed with error:", error.localizedDescription)
             throw ExitCode(1)
